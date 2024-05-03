@@ -15,7 +15,7 @@ export default function App() {
   });
 
   function handleChange(event) {
-    event.preventDefault();
+    //event.preventDefault();
     const { name, value } = event.target;
     console.log(name);
     console.log(value);
@@ -25,6 +25,16 @@ export default function App() {
     }));
   }
 
+  function handleChangeDate(event) {
+    //event.preventDefault();
+  // const { name, value } = event.target;
+    console.log(event);
+   // console.log(value);
+    setExpense((prevValue) => ({
+      ...prevValue,
+      expenseDate: event.toDate(),
+    }));
+  }
   async function handleClick() {
     console.log(expense)
     try{
@@ -57,7 +67,7 @@ export default function App() {
       <header>
         <h1>Tracker your Expenses</h1>
       </header>
-      <AddExpenseForm handleChange={handleChange} expense={expense} add={handleClick}/>
+      <AddExpenseForm handleChange={handleChange} handleChangeDate={handleChangeDate} expense={expense} add={handleClick}/>
       <Table edit={EditExpense}/>  
     </div>
   );

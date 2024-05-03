@@ -1,6 +1,6 @@
 EM_FrontEnd/node_modules/**
-EM_BackEnd/target/
+EM_BackEnd/target/**
 !EM_BackEnd/.mvn/wrapper/maven-wrapper.jar
 !EM_BackEnd/**/src/main/**/target/
 !EM_BackEnd/**/src/test/**/target/
-EM_BackEnd/.idea
+EM_BackEnd/.idea/**

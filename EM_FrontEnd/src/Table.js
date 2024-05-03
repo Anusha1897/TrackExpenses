@@ -20,26 +20,58 @@ function Table(props) {
       });
   }, []);
 
+  const rows = [
+    {name : 'Dan' , age : 20},
+    {name : 'Tan' , age : 10},
+  ]
+
+  const cols = [
+    {header : 'Expense Category' , field : 'expenseCategory'},
+    {header : 'Expense Name' , field : 'expenseName'},
+    {header : 'Expense Amount' , field : 'amountSpent'},
+    {header : 'Expense Date' , field : 'expenseDate'}
+  ]
+
+  const defaultColDef={
+    sortable:true,filter:true
+  }
+
+  const onGridReady=(params)=>{
+    console.log("Grid ready")
+    fetch("http://localhost:8080/expense/list").then(resp => resp.json())
+    .then(resp => {console.log(resp)
+      params.api.applyTransaction({add : resp})})
+  }
   
   return  (
-     <table>
-        <tr>
-        <th>Expense Category</th>
-          <th>Expense</th>
-          <th>Amount</th>
-          <th>Date</th>
-        </tr>
-        {posts.map((expense, index) => (
-          <tr className="row">
-            <td>{expense.expenseCategory}</td>
-            <td>{expense.expenseName}</td>
-            <td>{expense.amountSpent}</td>
-            <td>{expense.expenseDate}</td>
-            <td><button style={{"border":"none" , "background" : "none"}} onClick={() => props.edit(expense.id)}> <EditIcon style={{ "color": "#f5ba13"}}/> </button></td>
-            <td><button style={{"border":"none" , "background" : "none"}}> <DeleteIcon style={{ "color": "#f5ba13"}}/> </button></td>
-          </tr>
-        ))}
-      </table> 
+    <div className="ag-theme-quartz" // applying the grid theme
+    style={{ height: 500  , "textAlign":"center"}}
+     >
+     <AgGridReact 
+    //  rowData={rows} 
+     columnDefs={cols} 
+     defaultColDef={defaultColDef}
+     onGridReady={onGridReady}/>
+     </div>
+
+    //  <table>
+    //     <tr>
+    //     <th>Expense Category</th>
+    //       <th>Expense</th>
+    //       <th>Amount</th>
+    //       <th>Date</th>
+    //     </tr>
+    //     {posts.map((expense, index) => (
+    //       <tr className="row">
+    //         <td>{expense.expenseCategory}</td>
+    //         <td>{expense.expenseName}</td>
+    //         <td>{expense.amountSpent}</td>
+    //         <td>{expense.expenseDate}</td>
+    //         <td><button style={{"border":"none" , "background" : "none"}} onClick={() => props.edit(expense.id)}> <EditIcon style={{ "color": "#f5ba13"}}/> </button></td>
+    //         <td><button style={{"border":"none" , "background" : "none"}}> <DeleteIcon style={{ "color": "#f5ba13"}}/> </button></td>
+    //       </tr>
+    //     ))}
+    //   </table> 
   )
 }
 export default Table;

@@ -1,9 +1,14 @@
 import react from "react";
 import axios from 'axios';
-import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function AddExpenseForm(props){
     console.log(props)
+
+    
+
    return <form>
       
     <select id="expenseCategory" name="expenseCategory"  onChange={event => props.handleChange(event)}>
@@ -26,10 +31,14 @@ function AddExpenseForm(props){
           type="number"
           name="amountSpent"
           placeholder="Enter the Amount"
-          value={props.expense.expenseAmount}
+          value={props.expense.amountSpent}
         />
         {/* <DatePickerComponent placeholder="Choose a date"/> */}
-        <input type="date" id="expenseDate" name="expenseDate"  />
+      
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker onChange={event => props.handleChangeDate(event)} label="Pick a date" id="expenseDate" name="expenseDate"  />
+        </LocalizationProvider>
+        
        <button onClick={props.add}>Add</button>
         </form>
 }
