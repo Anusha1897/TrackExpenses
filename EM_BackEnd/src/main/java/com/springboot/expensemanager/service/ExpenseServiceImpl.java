@@ -33,9 +33,9 @@ public class ExpenseServiceImpl implements ExpenseService{
     }
 
     @Override
-    public boolean deleteExpense(Expense expense) {
-        if(expenserepository.existsById(expense.getId())) {
-            expenserepository.delete(expense);
+    public boolean deleteExpense(int id) {
+        if(expenserepository.existsById(id)) {
+            expenserepository.deleteById(id);
             return true;
         }
         else{
@@ -47,4 +47,9 @@ public class ExpenseServiceImpl implements ExpenseService{
     public void save(Expense theExpense) {
         expenserepository.save(theExpense);
     }
+
+//    @Override
+//    public int findSum() {
+//       return expenserepository.save();
+//    }
 }

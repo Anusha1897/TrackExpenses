@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/expense")
 public class ExpenseController {
 
@@ -48,9 +49,15 @@ public class ExpenseController {
         return newExpense!=null ? new ResponseEntity<>(newExpense,HttpStatus.OK) : new ResponseEntity<>(new Expense(),HttpStatus.BAD_REQUEST);
     }
 
-    @CrossOrigin
-    @PostMapping("delete-expense")
-    public ResponseEntity<String> deleteExpense(@RequestBody Expense expense){
-        return expenseService.deleteExpense(expense) ? new ResponseEntity<>("Success",HttpStatus.OK) : new ResponseEntity<>("Error Occurred",HttpStatus.BAD_REQUEST);
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("delete-expense/{id}")
+    public ResponseEntity<String> deleteExpense(@PathVariable int id){
+        return expenseService.deleteExpense(id) ? new ResponseEntity<>("Success",HttpStatus.OK) : new ResponseEntity<>("Error Occurred",HttpStatus.BAD_REQUEST);
     }
+
+//    @CrossOrigin
+//    @GetMapping("sum")
+//    public ResponseEntity<Integer> findSum(){
+//        return new ResponseEntity<>(expenseService.findSum(),HttpStatus.OK);
+//    }
 }

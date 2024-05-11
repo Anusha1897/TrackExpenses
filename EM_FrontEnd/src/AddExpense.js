@@ -13,10 +13,10 @@ function AddExpenseForm(props){
       
     <select id="expenseCategory" name="expenseCategory"  onChange={event => props.handleChange(event)}>
       <option value="choose" defaultValue>Choose an Expense category</option>
-      <option value="groceries">Groceries</option>
-      <option value="shopping">Shopping</option>
-      <option value="selfcare">SelfCare</option>
-      <option value="travel">Travel</option>
+      <option value="Groceries">Groceries</option>
+      <option value="Shopping">Shopping</option>
+      <option value="Selfcare">SelfCare</option>
+      <option value="Travel">Travel</option>
       <option value="EMIs">EMIs</option>
     </select>
         <input
