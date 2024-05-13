@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/expense")
 public class ExpenseController {
 
@@ -26,7 +25,6 @@ public class ExpenseController {
         this.expenseService = expenseService;
     }
 
-    @CrossOrigin
     @GetMapping("/list")
     public ResponseEntity<List<ExpenseDTO>> getExpenses(){
         List<Expense> expenses = expenseService.getAllExpenses();
@@ -34,22 +32,18 @@ public class ExpenseController {
         return new ResponseEntity<>(expenseDTOs, HttpStatus.OK);
     }
 
-    @CrossOrigin
     @PostMapping("add-expense")
     public ResponseEntity<Expense> addExpense(@RequestBody Expense expense){
         Expense newExpense = expenseService.createExpense(expense);
         return new ResponseEntity<>(newExpense,HttpStatus.CREATED);
     }
 
-    @CrossOrigin
-    @PostMapping("edit-expense")
+    @PutMapping("edit-expense")
     public ResponseEntity<Expense> editExpense(@RequestBody Expense expense){
         Expense newExpense = expenseService.editExpense(expense);
-
         return newExpense!=null ? new ResponseEntity<>(newExpense,HttpStatus.OK) : new ResponseEntity<>(new Expense(),HttpStatus.BAD_REQUEST);
     }
 
-    @CrossOrigin(origins = "*")
     @DeleteMapping("delete-expense/{id}")
     public ResponseEntity<String> deleteExpense(@PathVariable int id){
         return expenseService.deleteExpense(id) ? new ResponseEntity<>("Success",HttpStatus.OK) : new ResponseEntity<>("Error Occurred",HttpStatus.BAD_REQUEST);
