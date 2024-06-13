@@ -4,3 +4,4 @@ EM_BackEnd/target/**
 !EM_BackEnd/**/src/main/**/target/
 !EM_BackEnd/**/src/test/**/target/
 EM_BackEnd/.idea/**
+ET_BackEnd/node_modules/**

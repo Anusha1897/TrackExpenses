@@ -9,6 +9,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AgChart from "./AgChart";
 
+const API_URL = 'http://localhost:3000';
+
 const initialValue = {
   expenseCategory: "",
   expenseName: "",
@@ -19,7 +21,7 @@ const initialValue = {
 function AgTable() {
   const [gridApi, setGridApi] = useState(null);
   const [table, setTable] = useState([]);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
   const [FormData, setFormData] = useState({
     expenseCategory : "",
@@ -56,11 +58,25 @@ function AgTable() {
   useEffect(() => {
     getTableData();
   }, []);
-  const getTableData = () => {
-    fetch("http://localhost:8080/expense/list")
-      .then((resp) => resp.json())
-      .then((resp) => setTable(resp));
+
+  async function getTableData()  {
+    let response = await fetch("http://localhost:3000/list")
+    let responseJson = await response.json()
+    console.log(responseJson)
+    setTable(responseJson)
+    console.log(table)
   };
+
+// async function getTableData(){
+//   try{
+//     const response = await axios.get("http://localhost:3000/list");
+//     setTable(response.data)
+//     console.log(table)
+//   }
+//   catch(error){
+//     console.error('Error fetching tasks:', error);
+//   }
+// }
 
   useEffect(() => {
     // Calculate the sum whenever table changes
@@ -70,7 +86,7 @@ function AgTable() {
      });
      console.log(sum)
      setTotal(sum);
-  }, [table]);
+  }, []);
 
   const onGridReady = (params) => {
     setGridApi(params);
@@ -92,7 +108,7 @@ function AgTable() {
 
   function handleDelete(id){
     const confirm = window.confirm("Are you sure you want to delete the expense", id)
-    if(confirm) fetch("http://localhost:8080/expense/delete-expense/"+`${id}`,{method:"DELETE"}).then(resp => resp.json).then(resp =>  getTableData()) 
+    if(confirm) fetch(API_URL+"/delete-expense/"+`${id}`,{method:"DELETE"}).then(resp => resp.json).then(resp =>  getTableData()) 
      
   }
 
@@ -104,7 +120,7 @@ function AgTable() {
     if(FormData.id){
         try {
             const response = await axios.put(
-              "http://localhost:8080/expense/edit-expense",
+              API_URL+"/edit-expense",
               FormData
             );
             console.log("Post created:", response.data);
@@ -123,7 +139,7 @@ function AgTable() {
     else{
         try {
             const response = await axios.post(
-              "http://localhost:8080/expense/add-expense",
+              API_URL+"/add-expense",
               FormData
             );
             console.log("Post created:", response.data);
@@ -159,9 +175,9 @@ function AgTable() {
         <Button onClick={handleClickOpen}>Add Expense</Button>
       </Grid>
 
-      <Grid >
+      {/* <Grid >
         <Button onClick={handleClickOpen}>Graph</Button>
-      </Grid>
+      </Grid> */}
 
       <AgGridReact
         domLayout="autoHeight"
